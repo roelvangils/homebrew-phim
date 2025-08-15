@@ -18,6 +18,14 @@ cask "phim" do
   app "Phim.app"
   binary "#{appdir}/Phim.app/Contents/MacOS/Phim", target: "phim"
 
+  postflight do
+    # Remove quarantine attribute to bypass Gatekeeper warning for unsigned app
+    # This is safe - Phim is open source and you can verify the code yourself
+    system_command "/usr/bin/xattr",
+                   args: ["-cr", "#{appdir}/Phim.app"],
+                   sudo: false
+  end
+
   zap trash: [
     "~/Library/Preferences/com.phim.app.plist",
     "~/Library/Caches/com.phim.app",
