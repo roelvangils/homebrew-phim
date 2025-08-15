@@ -18,13 +18,6 @@ cask "phim" do
   app "Phim.app"
   binary "#{appdir}/Phim.app/Contents/MacOS/Phim", target: "phim"
 
-  postflight do
-    # Remove quarantine attribute to avoid "damaged app" warning
-    system_command "/usr/bin/xattr",
-                   args: ["-cr", "#{appdir}/Phim.app"],
-                   sudo: false
-  end
-
   zap trash: [
     "~/Library/Preferences/com.phim.app.plist",
     "~/Library/Caches/com.phim.app",
